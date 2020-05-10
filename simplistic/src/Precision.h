@@ -1,6 +1,8 @@
 #ifndef SIMPLISTIC_SRC_PRECISION_H_
 #define SIMPLISTIC_SRC_PRECISION_H_
 
+#include <math.h>
+
 namespace simplistic {
 
 /**
@@ -8,6 +10,9 @@ namespace simplistic {
  * or doubleprecision versions. By default single precision is provided.
  */
 typedef float real;
+
+/** Defines the precision of the square root operator. */
+#define real_sqrt sqrtf
 
 }  // namespace simplistic
 
