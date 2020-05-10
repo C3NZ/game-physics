@@ -10,7 +10,6 @@ elseif (${CMAKE_BUILD_TYPE} STREQUAL "Release" OR ${CMAKE_BUILD_TYPE} STREQUAL "
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin)
 endif()
 
-
 # For vim setup.
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -20,35 +19,32 @@ project(simplistic)
 
 file(
     GLOB_RECURSE
-    ENGINE_SRC
+    SIMPLISTIC_SRC
     ${CMAKE_SOURCE_DIR}/simplistic/src/*.h
     ${CMAKE_SOURCE_DIR}/simplistic/src/*.cpp
 )
 
-add_library(engine STATIC ${ENGINE_SRC})
+add_library(simplistic STATIC ${SIMPLISTIC_SRC})
 
 set_target_properties(
-    engine
+    simplistic
     PROPERTIES PUBLIC_HEADER ${CMAKE_SOURCE_DIR}/simplistic/src/Simplistic.h
 )
 
 target_include_directories(
-    engine
+    simplistic
     PUBLIC ${CMAKE_SOURCE_DIR}/simplistic/src
 )
 
-if (WIN32)
-    message (STATUS ">>> Setting windows compile definitions for the engine.")
-    target_compile_definitions(
-        engine
-    )
+project(sandbox)
 
-    # Use a Multi threaded specific and DLL specific runtime for windows.
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd")
-elseif (UNIX)
-    message (STATUS ">>> Setting linux compile definitions for the engine.")
-    target_compile_definitions(
-        engine
-    )
-endif()
+file(
+    GLOB_RECURSE
+    SANDBOX_SRC
+    ${CMAKE_SOURCE_DIR}/sandbox/src/*.h
+    ${CMAKE_SOURCE_DIR}/sandbox/src/*.cpp
+)
+
+add_executable(sandbox ${SANDBOX_SRC})
+
+target_link_libraries(sandbox PRIVATE simplistic)
