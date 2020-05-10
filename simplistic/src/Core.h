@@ -1,13 +1,12 @@
 #ifndef SIMPLISTIC_SRC_CORE_H_
 #define SIMPLISTIC_SRC_CORE_H_
 
-#include "simplistic/src/Precision.h"
+#include "Precision.h"
 
 namespace simplistic {
 
 class Vector3 {
  public:
-   real x_position_, y_position_, z_position_;
    Vector3() : x_position_(0), y_position_(0), z_position_(0) {}
    Vector3(const real x, const real y, const real z) 
        : x_position_(x), y_position_(y), z_position_(z) {} 
@@ -18,6 +17,7 @@ class Vector3 {
     z_position_ = -z_position_;
    }
  private:
+   real x_position_, y_position_, z_position_;
    real pad_;
 };
 
