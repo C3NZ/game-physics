@@ -1,6 +1,8 @@
-gitignore.io help:
-  list    - lists the operating systems, programming languages and IDE input types
-  :types: - creates .gitignore files for types of operating systems, programming languages or IDEs
+.clangd
+Release
+Debug
+
+#
 # Created by https://www.gitignore.io/api/c++,cpp,c,linux,macos
 # Edit at https://www.gitignore.io/?templates=c++,cpp,c,linux,macos
 
@@ -123,3 +125,25 @@ Temporary Items
 .apdisk
 
 # End of https://www.gitignore.io/api/c++,cpp,c,linux,macos
+
+# Created by https://www.gitignore.io/api/cmake
+# Edit at https://www.gitignore.io/?templates=cmake
+
+### CMake ###
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+### CMake Patch ###
+# External projects
+*-prefix/
+
+# End of https://www.gitignore.io/api/cmake
