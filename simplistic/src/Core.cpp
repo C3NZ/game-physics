@@ -12,9 +12,10 @@ real Vector3::Magnitude() const {
 }
 
 real Vector3::SquareMagnitude() const {
-  return x_position_ * x_position_ +
+  return (
+      x_position_ * x_position_ +
       y_position_ * y_position_ + 
-      z_position_ * z_position_;
+      z_position_ * z_position_);
 }
 
 Vector3 Vector3::Normalize() {

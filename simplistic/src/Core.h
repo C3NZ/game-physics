@@ -24,7 +24,54 @@ class Vector3 {
   inline real GetX() const { return x_position_; }
   inline real GetY() const { return y_position_; }
   inline real GetZ() const { return z_position_; }
- 
+
+  /** Compute the dot product between this and another vector. */
+  inline real DotProduct(const Vector3& vector) {
+    return (
+        x_position_ * vector.GetX() +
+        y_position_ * vector.GetY() + 
+        z_position_ * vector.GetZ());
+  }
+
+  /** 
+   * Compute the component product of this vector with another and return a 
+   * new vector 
+   */
+  inline Vector3 ComponentProductNew(const Vector3& vector) const {
+    return Vector3(
+        x_position_ * vector.GetX(),
+        y_position_ * vector.GetY(),
+        z_position_ * vector.GetZ());
+  }
+
+  /** 
+   * Compute the component product of this vector with another and apply it to
+   * this vector 
+   */
+  inline void ComponentProduct(const Vector3& vector) {
+    x_position_ *= vector.GetX();
+    y_position_ *= vector.GetY();
+    z_position_ *= vector.GetZ();
+  }
+
+  /** Take the vector product and return a new one. */
+  inline Vector3 VectorProductNew(const Vector3& vector) const {
+    return Vector3(
+        y_position_ * vector.GetZ() - z_position_ * vector.GetY(),
+        z_position_ * vector.GetX() - x_position_ * vector.GetZ(),
+        x_position_ * vector.GetY() - y_position_ * vector.GetX());
+  }
+
+  /** 
+   * Update this vector be the result of the vector product of itself with
+   * another vector.
+   */
+  inline void VectorProduct(const Vector3& vector) {
+    x_position_ = y_position_ * vector.GetZ() - z_position_ * vector.GetY();
+    y_position_ = z_position_ * vector.GetX() - x_position_ * vector.GetZ();
+    z_position_ = x_position_ * vector.GetY() - y_position_ * vector.GetX();
+  }
+
   /** Invert the vector */
   inline void Invert() {
     x_position_ = -x_position_;
@@ -37,7 +84,8 @@ class Vector3 {
     y_position_ += vector.GetY() * scale;
     z_position_ += vector.GetZ() * scale;
   }
- 
+
+   
   /** Add another vector to the current one in place. */
   inline void operator+=(const Vector3& vector) {
      x_position_ += vector.GetX();
@@ -52,7 +100,6 @@ class Vector3 {
         y_position_ + vector.GetY(),
         z_position_ + vector.GetZ());
   }
-  
    
    /** Add a scalar to a copy of the of the current vector. */
    inline Vector3 operator+(const real value) {
@@ -82,23 +129,24 @@ class Vector3 {
     z_position_ *= value;
   }
 
-  inline void operator*=(const Vector3& vector) {
-    x_position_ *= vector.GetX(); 
-    y_position_ *= vector.GetY(); 
-    z_position_ *= vector.GetZ(); 
-  }
-
-  /** Multiply the current vector by a scalar and return a new one */
+  /** Multiply the current vector by a scalar and return a new vector. */
   inline Vector3 operator*(const real value) const {
     return Vector3(
         x_position_ * value, y_position_ * value, z_position_ * value);
   }
 
+  /** Component Product operations */
+
+  inline void operator*=(const Vector3& vector) { ComponentProduct(vector); }
   inline Vector3 operator*(const Vector3& vector) const {
-    return Vector3(
-        x_position_ * vector.GetX(),
-        y_position_ * vector.GetY(), 
-        z_position_ * vector.GetZ());
+    return ComponentProductNew(vector);
+  }
+
+  /** Vector Product operations */
+
+  inline void operator%=(const Vector3& vector) { VectorProduct(vector); }
+  inline Vector3 operator%(const Vector3& vector) const {
+    return VectorProductNew(vector);
   }
  private:
   real x_position_, y_position_, z_position_;
