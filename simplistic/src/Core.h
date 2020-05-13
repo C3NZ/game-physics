@@ -20,7 +20,7 @@ class Vector3 {
  
   /** Return a new normalized vector of unit length */
   Vector3 Normalize();
- 
+
   inline real GetX() const { return x_position_; }
   inline real GetY() const { return y_position_; }
   inline real GetZ() const { return z_position_; }
@@ -35,7 +35,7 @@ class Vector3 {
 
   /** 
    * Compute the component product of this vector with another and return a 
-   * new vector 
+   * new vector. 
    */
   inline Vector3 ComponentProductNew(const Vector3& vector) const {
     return Vector3(
@@ -46,7 +46,7 @@ class Vector3 {
 
   /** 
    * Compute the component product of this vector with another and apply it to
-   * this vector 
+   * this vector. 
    */
   inline void ComponentProduct(const Vector3& vector) {
     x_position_ *= vector.GetX();
@@ -79,6 +79,9 @@ class Vector3 {
     z_position_ = -z_position_;
   }
 
+  /**
+   * Add a vector scaled by a scalar to the current vector.
+   */
   inline void AddScaledVector(const Vector3& vector, real scale) {
     x_position_ += vector.GetX() * scale;
     y_position_ += vector.GetY() * scale;
@@ -135,19 +138,17 @@ class Vector3 {
         x_position_ * value, y_position_ * value, z_position_ * value);
   }
 
-  /** Component Product operations */
+  /** --------------------- Component Product operations -------------------- */
 
   inline void operator*=(const Vector3& vector) { ComponentProduct(vector); }
   inline Vector3 operator*(const Vector3& vector) const {
-    return ComponentProductNew(vector);
-  }
+    return ComponentProductNew(vector); }
 
-  /** Vector Product operations */
+  /** ---------------------- Vector Product operations ---------------------- */
 
   inline void operator%=(const Vector3& vector) { VectorProduct(vector); }
   inline Vector3 operator%(const Vector3& vector) const {
-    return VectorProductNew(vector);
-  }
+    return VectorProductNew(vector); }
  private:
   real x_position_, y_position_, z_position_;
   real pad_;
