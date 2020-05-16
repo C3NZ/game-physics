@@ -1,18 +1,41 @@
 #ifndef SIMPLISTIC_SRC_PRECISION_H_
 #define SIMPLISTIC_SRC_PRECISION_H_
 
+#include <float.h>
 #include <math.h>
 
 namespace simplistic {
 
-/**
- * Defines a real number precision. Simplistic can be compiled in single-
- * or doubleprecision versions. By default single precision is provided.
- */
-typedef float real;
 
-/** Defines the precision of the square root operator. */
-#define real_sqrt sqrtf
+#ifdef SIMPLISTIC_SINGLE_PRECISION
+  typedef float real;
+
+  #define REAL_MAX FLT_MAX
+  #define REAL_EPSILON FLT_EPSILON
+  #define REAL_PI 3.14159f
+
+  #define REAL_SQRT sqrtf
+  #define REAL_ABS fabsf
+  #define REAL_SIN sinf
+  #define REAL_COS cosf
+  #define REAL_EXP expf
+  #define REAL_POW powf
+  #define REAL_FMOD fmodf
+#else
+  typedef double real;
+
+  #define REAL_MAX DBL_MAX
+  #define REAL_EPSILON DBL_EPSILON
+  #define REAL_PI 3.14159265358979
+
+  #define REAL_SQRT sqrt
+  #define REAL_ABS fabs
+  #define REAL_SIN sin
+  #define REAL_COS cos
+  #define REAL_EXP exp
+  #define REAL_POW pow
+  #define REAL_FMOD fmod
+#endif
 
 }  // namespace simplistic
 
