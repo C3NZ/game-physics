@@ -6,6 +6,11 @@
 
 namespace simplistic {
 
+// Default to single precision accuracy if no accuracy is defined.
+#if !(defined(SIMPLISTIC_SINGLE_PRECISION) && \
+    defined(SIMPLISTIC_DOUBLE_PRECISION))
+  #define SIMPLISTIC_SINGLE_PRECISION
+#endif
 
 #ifdef SIMPLISTIC_SINGLE_PRECISION
   typedef float real;
@@ -21,7 +26,7 @@ namespace simplistic {
   #define REAL_EXP expf
   #define REAL_POW powf
   #define REAL_FMOD fmodf
-#else
+#elif defined(SIMPLISTIC_DOUBLE_PRECISION)
   typedef double real;
 
   #define REAL_MAX DBL_MAX
