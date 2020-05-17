@@ -5,24 +5,36 @@
 
 namespace simplistic {
 
+
+
+
 class Vector3 {
  public:
   Vector3() : x_position_(0), y_position_(0), z_position_(0) {}
   Vector3(const real x, const real y, const real z) 
       : x_position_(x), y_position_(y), z_position_(z) {} 
  
- 
-  /** Return the magnitude of the vector. */
-  real Magnitude() const;
- 
-  /** Return the square of the magnitude. */
-  real SquareMagnitude() const;
- 
-  /** Return a new normalized vector of unit length */
-  Vector3 Normalize();
 
+  /** 
+   * Vector constants.
+   */
+
+  const static Vector3 GRAVITY;
+  const static Vector3 HIGH_GRAVITY;
+  const static Vector3 UP;
+  const static Vector3 RIGHT;
+  const static Vector3 OUT_OF_SCREEN;
+  const static Vector3 X;
+  const static Vector3 Y;
+  const static Vector3 Z;
+
+  inline void SetX(const real x) { x_position_ = x; }
   inline real GetX() const { return x_position_; }
+
+  inline void SetY(const real y) { y_position_ = y; }
   inline real GetY() const { return y_position_; }
+
+  inline void SetZ(const real z) { z_position_ = z; }
   inline real GetZ() const { return z_position_; }
 
   /** Compute the dot product between this and another vector. */
@@ -78,6 +90,31 @@ class Vector3 {
     y_position_ = -y_position_;
     z_position_ = -z_position_;
   }
+
+  real Magnitude() const {
+    return REAL_SQRT(
+        x_position_ * x_position_ +
+        y_position_ * y_position_ + 
+        z_position_ * z_position_);
+  }
+
+  real SquareMagnitude() const {
+    return (
+        x_position_ * x_position_ +
+        y_position_ * y_position_ + 
+        z_position_ * z_position_);
+  }
+
+  Vector3 Vector3::Normalize() {
+    real length = Magnitude();
+    if (length > 0) {
+      return (*this) * (static_cast<real>(1) / length);
+    }
+
+    return *this;
+  }
+
+
 
   /**
    * Add a vector scaled by a scalar to the current vector.
@@ -153,6 +190,7 @@ class Vector3 {
   real x_position_, y_position_, z_position_;
   real pad_;
 };
+
 
 }  // namespace simplistic
 
