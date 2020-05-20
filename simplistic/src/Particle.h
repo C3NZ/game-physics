@@ -87,6 +87,22 @@ class Particle {
   }
 
   void IntegrateWithAcceleration(const real duration) {
+    assert(duration > 0.0);
+    position_.AddScaledVector(velocity_, duration);
+    position_.AddScaledVector(acceleration_, ((duration * duration) / 2));
+
+    // Work out acceleration from the force.
+    Vector3 resulting_acceleration = acceleration_;
+    resulting_acceleration.AddScaledVector(
+        force_accumulator_, inverse_mass_);
+
+    // Apply acceleration with damping.
+    velocity_.AddScaledVector(resulting_acceleration, duration);
+
+    // Apply damping/drag.
+    velocity_ *= REAL_POW(damping_, duration);
+
+    ClearAccumulator();    
   }
 
  private:

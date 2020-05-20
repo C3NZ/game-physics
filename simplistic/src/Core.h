@@ -5,20 +5,15 @@
 
 namespace simplistic {
 
-
-
-
 class Vector3 {
  public:
   Vector3() : x_position_(0), y_position_(0), z_position_(0) {}
   Vector3(const real x, const real y, const real z) 
       : x_position_(x), y_position_(y), z_position_(z) {} 
  
-
   /** 
    * Vector constants.
    */
-
   const static Vector3 GRAVITY;
   const static Vector3 HIGH_GRAVITY;
   const static Vector3 UP;
@@ -91,6 +86,7 @@ class Vector3 {
     z_position_ = -z_position_;
   }
 
+  /** Return the magnitude of the vector.  */
   real Magnitude() const {
     return REAL_SQRT(
         x_position_ * x_position_ +
@@ -98,6 +94,10 @@ class Vector3 {
         z_position_ * z_position_);
   }
 
+  /**
+   * Return the square of the magniutde. Useful for when we don't need exact
+   * precision of the magnitude but do need to increase the speed.
+   */
   real SquareMagnitude() const {
     return (
         x_position_ * x_position_ +
@@ -105,7 +105,8 @@ class Vector3 {
         z_position_ * z_position_);
   }
 
-  Vector3 Vector3::Normalize() {
+  /** Normalize the vector if it's overall magnitude is > 0. */
+  Vector3 Normalize() const {
     real length = Magnitude();
     if (length > 0) {
       return (*this) * (static_cast<real>(1) / length);
@@ -114,7 +115,12 @@ class Vector3 {
     return *this;
   }
 
-
+  /** Clear the vector of it's position. */
+  void Clear() {
+    x_position_ = 0;
+    y_position_ = 0;
+    z_position_ = 0;
+  }
 
   /**
    * Add a vector scaled by a scalar to the current vector.
